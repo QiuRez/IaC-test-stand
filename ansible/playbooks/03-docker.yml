@@ -1,0 +1,7 @@
+---
+- name: Установка Docker на серверах
+  hosts: servers
+  become: true
+
+  roles:
+    - docker

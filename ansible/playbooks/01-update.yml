@@ -1,0 +1,14 @@
+---
+- name: Обновление системы на всех серверах
+  hosts: servers
+  become: true
+
+  tasks:
+    - name: Обновить кеш пакетов
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Применить обновления
+      ansible.builtin.apt:
+        upgrade: safe

@@ -1,0 +1,38 @@
+---
+- name: Добавить GPG-ключ Docker
+  ansible.builtin.deb822_repository:
+    name: docker
+    types: deb
+    uris: https://download.docker.com/linux/debian
+    suites: "{{ docker_apt_release }}"
+    components: stable
+    architectures: amd64
+    signed_by: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Добавить репозиторий Docker
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [arch={{ docker_apt_arch }}]
+      https://download.docker.com/linux/debian
+      {{ docker_apt_release }} stable
+    state: present
+
+- name: Установить Docker CE и плагин Compose
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: present
+    update_cache: true
+
+# - name: Установить Python-библеотеку docker
+
+- name: Запустить и включить Docker
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+

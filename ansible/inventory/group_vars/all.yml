@@ -1,0 +1,16 @@
+---
+common_timezone: Asia/Omsk
+common_packages:
+  - curl
+  - vim
+  - htop
+  - git
+  - ca-certificates
+  - gnupg
+  - lsb-release
+  - python3-pip
+  - python3-docker
+
+
+# Приоритетность
+# role defaults -> group_vars/all -> group_vars/<group> -> host_vars/<host> -> vars

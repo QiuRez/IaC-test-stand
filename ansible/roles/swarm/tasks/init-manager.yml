@@ -1,0 +1,24 @@
+---
+- name: Инициализация Swarm на первом мастере
+  community.docker.docker_swarm:
+    state: present
+    advertise_addr: "{{ docker_swarm_advertise_addr }}"
+  when: inventory_hostname == groups['masters'][0]
+
+
+- name: Получить информацию о Swarm
+  community.docker.docker_swarm_info:
+  register: swarm_info
+  when: inventory_hostname == groups['masters'][0]
+
+# TODO: Отладка - убрать
+# - name: Вывести содержимое swarm_info
+#   ansible.builtin.debug:
+#     var: swarm_info
+#   when: inventory_hostname == groups['masters'][0]
+
+
+- name: Сохранить worker-токен
+  ansible.builtin.set_fact:
+    swarm_worker_token: "{{ swarm_info.swarm_facts.JoinTokens.Worker }}"
+  when: inventory_hostname == groups['masters'][0]

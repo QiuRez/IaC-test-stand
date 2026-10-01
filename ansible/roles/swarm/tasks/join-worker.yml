@@ -1,0 +1,9 @@
+---
+- name: Присоединить воркеры к Swarm
+  community.docker.docker_swarm:
+    state: join
+    advertise_addr: "{{ ansible_facts['default_ipv4']['address'] }}"
+    join_token: "{{ hostvars[groups['masters'][0]]['swarm_worker_token'] }}"
+    remote_addrs:
+      - "{{ hostvars[groups['masters'][0]]['ansible_default_ipv4']['address'] }}:{{ docker_swarm_join_port }}"
+  when: inventory_hostname in groups['workers']

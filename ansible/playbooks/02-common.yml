@@ -1,0 +1,7 @@
+---
+- name: Базовая настройка всех серверов
+  hosts: servers
+  become: true
+
+  roles:
+    - common

@@ -1,0 +1,6 @@
+---
+- name: Импорт задач инициализации менеджера (мастера)
+  ansible.builtin.import_tasks: init-manager.yml
+
+- name: Импорт задач подключения воркеров
+  ansible.builtin.import_tasks: join-worker.yml

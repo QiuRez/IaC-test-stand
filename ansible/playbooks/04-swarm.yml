@@ -1,0 +1,7 @@
+---
+- name: Инициализация Docker Swarm
+  hosts: servers
+  become: true
+
+  roles:
+    - swarm
